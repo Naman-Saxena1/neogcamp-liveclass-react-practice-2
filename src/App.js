@@ -5,13 +5,20 @@ import "./styles.css";
 export default function App() {
   let [loader, setLoader] = useState(false);
   let [data, setData] = useState([]);
+  let [errorMsg, setErrorMsg] = useState(false);
 
   async function onClickHandler() {
     setLoader(true);
-    let response = await axios.get("/api/users");
-    console.log("Response : ", response.data.users);
-    setData(response.data.users);
-    setLoader(false);
+    try {
+      let response = await axios.get("/api/users");
+      console.log("This is response", response);
+      console.log("Response : ", response.data.users);
+      setData(response.data.users);
+      setLoader(false);
+    } catch (error) {
+      setErrorMsg(true);
+      setLoader(false);
+    }
   }
 
   return (
@@ -23,6 +30,7 @@ export default function App() {
           <li>{item.name}</li>
         ))}
       </ol>
+      {errorMsg ? <p>Something went wrong! :(</p> : ""}
     </div>
   );
 }
