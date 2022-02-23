@@ -27,7 +27,7 @@ export default function App() {
       <button onClick={onClickHandler}> Click to load data from server </button>
       <ol>
         {data.map((item) => (
-          <li>{item.name}</li>
+          <li key={item.id}>{item.name}</li>
         ))}
       </ol>
       {errorMsg ? <p>Something went wrong! :(</p> : ""}
